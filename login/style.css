@@ -1,0 +1,10 @@
+section{
+    width: 20%;
+    height: fit-content;
+    /*display: flex;
+    justify-content: space-evenly;*/
+}
+
+#login{
+    border: 2px solid red;
+}
