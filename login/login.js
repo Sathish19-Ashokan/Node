@@ -44,7 +44,7 @@ app.post('/login', (req, res) => {
             return res.status(500).send(err);
         }
     });
-    let isuploaded = (uploaded > check) ? isuploaded = true : isuploaded = false;
+    let isuploaded = (uploaded > check) ? true : false;
     res.render("index", { user, pwd, isuploaded, uploaded });
     check++;
 })
