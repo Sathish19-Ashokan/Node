@@ -1,18 +1,18 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const fileUpload = require('express-fileupload');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
-app.use(fileUpload())
+app.use(fileUpload());
 
-app.set("view engine", "ejs")
-app.set(__dirname + "/views");
+app.set("view engine", "ejs");
+app.set(`${__dirname}/views`);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/login.html')
-})
+    res.sendFile(`${__dirname}/login.html`);
+});
 
 let user = new Array();
 let pwd = new Array();
@@ -36,23 +36,19 @@ app.post('/login', (req, res) => {
 
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     sampleFile = req.files.sampleFile;
-    uploadPath = __dirname + '/uploaded/' + sampleFile.name;
+    uploadPath = `${__dirname}/uploaded/${sampleFile.name}`;
 
     // Use the mv() method to place the file somewhere on your server
     sampleFile.mv(uploadPath, function (err) {
-        if (err)
+        if (err){
             return res.status(500).send(err);
-
-    })
-    let isuploaded;
-    if (uploaded > check)
-        isuploaded = true;
-    else
-        isuploaded = false
+        }
+    });
+    let isuploaded = (uploaded > check) ? isuploaded = true : isuploaded = false;
     res.render("index", { user, pwd, isuploaded, uploaded });
     check++;
 })
 
 app.listen(3000, () => {
     console.log("Port 3000 is Listening");
-})
+});
