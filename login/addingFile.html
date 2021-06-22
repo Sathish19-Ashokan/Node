@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>UploadFile</title>
+    <link rel="stylesheet" href="bg.css">
+</head>
+
+<body>
+    <h1>Upload your Files Here!</h1>
+    <form id="login" method="POST" encType="multipart/form-data">
+        <label for="user">UserName: </label><br>
+        <input id="user" type="text" name="username"><br>
+        <label for="pwd">Password: </label><br>
+        <input id="pwd" type="password" name="password"><br>
+        <input id="myFile" type="file" name="sampleFile" /><br><br>
+        <button type="submit">Upload</button>
+    </form>
+    <ul id="container">
+
+    </ul>
+    <script>
+        const myForm = document.getElementById('login');
+        myForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let Username = document.getElementById("user").value;
+            let Password = document.getElementById("pwd").value;
+            let SampleFile = document.getElementById("myFile").files[0];
+            uploadFile(Username, Password, SampleFile);
+        })
+
+        const uploadFile = (username, password, file) => {
+            const data = new FormData();
+
+            data.append('username', username);
+            data.append('password', password);
+            data.append('file', file);
+            fetch('/login', {
+                method: 'POST',
+                body: data
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (json) {
+                    console.log(json);
+                    const User = json.data.username;
+                    const Password = json.data.password;
+                    const Message = json.message;
+                    const ul = document.getElementById('container');
+                    const list1 = document.createElement('li');
+                    const list2 = document.createElement('li');
+                    const bold1 = document.createElement('b');
+                    const bold2 = document.createElement('b');
+                    const Link = document.createElement('a');
+                    bold1.append('UserName:');
+                    list1.append(bold1);
+                    list1.append(User);
+                    bold2.append('  Password:');
+                    list1.append(bold2);
+                    list1.append(Password);
+                    list2.append(Message);
+                    let text = document.createTextNode("Download Here");
+                    Link.setAttribute("href", json.data.url);
+                    //Link.setAttribute("href", "data:text/html;charset=utf-8," + json.data.url);
+                    Link.setAttribute("download",json.data.name);
+                    //Link.setAttribute("download","filepath.txt");
+                    Link.appendChild(text);
+                    ul.append(list1);
+                    ul.append(list2);
+                    ul.appendChild(Link);
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
+
+    </script>
+</body>
+
+</html>

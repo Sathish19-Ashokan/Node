@@ -1,9 +1,74 @@
 <!DOCTYPE html>
-<html>
-  <head>
-	<title>Welcome Home</title>
-  </head>
-  <body>
-	<a href="/login">Please Login Here!</a>
-  </body>
+<html lang="en">
+
+<head>
+  <title>LogIn</title>
+</head>
+
+<body>
+  <form id="login" method="POST">
+    <!-- encType="multipart/form-data"> -->
+    <label for="user">UserName </label><br>
+    <input id="user" type="text" name="username"><br>
+    <label for="pwd">Password </label><br>
+    <input id="pwd" type="password" name="password"><br>
+    <button type="submit">Log In</button>
+  </form>
+  <ul id="container">
+
+  </ul>
+  <script>
+    const myForm = document.getElementById('login');
+    myForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let data = new URLSearchParams();
+      data.append("Username:", document.getElementById("user").value);
+      data.append("Password:", document.getElementById("pwd").value);
+
+      // const ul = document.getElementById('container');
+      // const list1 = document.createElement('li');
+      // let bold1 = document.createElement('b');
+      // let bold2 = document.createElement('b');
+      // let value1 = document.getElementById("user").value;
+      // let value2 = document.getElementById("pwd").value;
+      // bold1.append('UserName:');
+      // list1.append(bold1);
+      // list1.append(value1);
+      // bold2.append('  Password:');
+      // list1.append(bold2);
+      // list1.append(value2);
+      // ul.append(list1);
+
+      // (B) FETCH
+      fetch('/login', {
+        method: 'post',
+        body: data
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (text) {
+          //console.log(text);
+          const ul = document.getElementById('container');
+          const list1 = document.createElement('li');
+          let bold1 = document.createElement('b');
+          let bold2 = document.createElement('b');
+          let value1 = document.getElementById("user").value;
+          let value2 = document.getElementById("pwd").value;
+          bold1.append('UserName:');
+          list1.append(bold1);
+          list1.append(value1);
+          bold2.append('  Password:');
+          list1.append(bold2);
+          list1.append(value2);
+          ul.append(list1);
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
+    })
+  </script>
+</body>
+
 </html>

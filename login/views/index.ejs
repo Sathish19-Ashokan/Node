@@ -1,0 +1,36 @@
+<html>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <h2>File Uploaded!!</h2>
+    <table>
+        <thead>
+            <th>Username</th>
+            <th>Password</th>
+        </thead>
+        <% for(let i=0;i<user.length;i++) { %>
+            <tr>
+                <td>
+                    <%= user[i] %>
+                </td>
+                <td>
+                    <%= pwd[i] %>
+                </td>
+                <% } %>
+            </tr>
+
+    </table>
+<br>
+    <button onclick="history.go(-1)">
+        BACK
+    </button>
+</body>
+
+
+</html>
